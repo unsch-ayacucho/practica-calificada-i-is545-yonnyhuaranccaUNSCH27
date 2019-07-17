@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-07-2019 a las 06:28:09
+-- Tiempo de generación: 17-07-2019 a las 04:13:42
 -- Versión del servidor: 10.1.40-MariaDB
 -- Versión de PHP: 7.3.5
 
@@ -81,6 +81,20 @@ CREATE TABLE `marca` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `pedido`
+--
+
+CREATE TABLE `pedido` (
+  `idpedido` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `total` decimal(10,0) NOT NULL,
+  `estado` varchar(60) NOT NULL,
+  `idproducto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `producto`
 --
 
@@ -120,9 +134,17 @@ ALTER TABLE `marca`
   ADD PRIMARY KEY (`idmarca`);
 
 --
+-- Indices de la tabla `pedido`
+--
+ALTER TABLE `pedido`
+  ADD PRIMARY KEY (`idpedido`),
+  ADD UNIQUE KEY `idproducto` (`idproducto`);
+
+--
 -- Indices de la tabla `producto`
 --
 ALTER TABLE `producto`
+  ADD PRIMARY KEY (`idproducto`),
   ADD UNIQUE KEY `idcategoria` (`idcategoria`,`idcolor`,`idmarca`),
   ADD KEY `idcolor` (`idcolor`),
   ADD KEY `idmarca` (`idmarca`);
@@ -138,8 +160,20 @@ ALTER TABLE `categoria`
   MODIFY `idcategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT de la tabla `pedido`
+--
+ALTER TABLE `pedido`
+  MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `pedido`
+--
+ALTER TABLE `pedido`
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`idproducto`) REFERENCES `producto` (`idproducto`);
 
 --
 -- Filtros para la tabla `producto`
